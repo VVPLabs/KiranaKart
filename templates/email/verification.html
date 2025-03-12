@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Verification - KiranaKart</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0;">
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f4f4f4; padding: 20px 0;">
+        <tr>
+            <td align="center">
+                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="500" style="background: #ffffff; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+                    <!-- Header with Logo -->
+                    <tr>
+                        <td align="center" style="padding: 20px 0;">
+                            <img src="https://via.placeholder.com/150x50/007bff/ffffff?text=KiranaKart" alt="KiranaKart Logo" width="150" style="display: block;">
+                        </td>
+                    </tr>
+                    
+                    <!-- Body Content -->
+                    <tr>
+                        <td style="padding: 20px; text-align: center;">
+                            <h2 style="color: #333; margin-bottom: 10px;">Welcome to KiranaKart!</h2>
+                            <p style="color: #555; font-size: 16px; line-height: 1.5; margin: 0 20px;">
+                                Thank you for signing up. Please verify your email address by clicking the button below.
+                            </p>
+                        </td>
+                    </tr>
+
+                    <!-- CTA Button -->
+                    <tr>
+                        <td align="center" style="padding: 20px;">
+                            <a href="{{ verification_url }}" style="
+                                display: inline-block;
+                                padding: 14px 24px;
+                                background-color: #007bff;
+                                color: #ffffff !important;
+                                text-decoration: none;
+                                border-radius: 6px;
+                                font-size: 16px;
+                                font-weight: bold;
+                                box-shadow: 0px 4px 10px rgba(0, 123, 255, 0.2);
+                            ">
+                                Verify Email
+                            </a>
+                        </td>
+                    </tr>
+
+                    <!-- Footer -->
+                    <tr>
+                        <td style="padding: 20px; text-align: center;">
+                            <p style="color: #777; font-size: 14px;">
+                                If you didn't request this, you can ignore this email.
+                            </p>
+                            <hr style="border: none; border-top: 1px solid #ddd; margin: 20px;">
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
