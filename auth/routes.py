@@ -100,7 +100,7 @@ async def login(login_data: UserLogin, session: AsyncSession = Depends(get_sessi
         {
             "username": user.username,
             "user_id": str(user.user_id),
-            "is_admin": user.is_admin,
+            "role": user.role,
         }
     )
     refresh_token = create_access_token(
@@ -154,7 +154,7 @@ async def get_new_access_token(token_details: dict = Depends(RefreshTokenBearer(
         new_access_token = create_access_token(user_data={
             "username": token_details["username"],
             "user_id": str(token_details["user_id"]),
-            "is_admin": token_details["is_admin"],
+            "role": token_details["role"],
         })
         return {"access_token ": new_access_token}
     raise HTTPException(

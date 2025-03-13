@@ -2,17 +2,30 @@ from pydantic import BaseModel
 from sqlmodel import Field
 from db.models import ProductBase
 from datetime import datetime
-from typing import Optional
+from typing import Optional, List
 from uuid import UUID
 
 
-class ProductCreate(BaseModel):
-    name: str= Field(..., title="Product Name", min_length=2, max_length=255)
-    description: str= Field(..., title="Product Description", min_length=10)
+class ProductCreate(ProductBase):
     category_ids: Optional[list[UUID]]
-    price: float = Field(ge=0)
-    stock: int = Field(ge=0)
 
+
+class ProductUpdate(BaseModel):
+    name: Optional[str] = None
+    description: Optional[str] = None
+    price: Optional[float] = Field(default=None, ge=0)
+    stock: Optional[int] = Field(default=None, ge=0)
+    category_ids: Optional[List[UUID]] = None
+
+class ProductCategoryLink(BaseModel):
+    category_id: UUID
+    category_name: str
 
 class ProductResponse(ProductBase):
-    pass
+    product_id:UUID
+    created_at:datetime
+    categories:List[ProductCategoryLink]
+
+class ProductListResponse(BaseModel):
+    total:int
+    products: ProductResponse

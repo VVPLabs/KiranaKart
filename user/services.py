@@ -1,9 +1,9 @@
-from sqlmodel import select, desc, update , delete
+from sqlmodel import select, desc
 from fastapi import HTTPException, status
 from sqlmodel.ext.asyncio.session import AsyncSession
 from auth.services import AuthService
 from uuid import UUID
-from db.models import User, Order, Review, Product
+from db.models import User, Order
 from user.schemas import UserUpdate
 
 

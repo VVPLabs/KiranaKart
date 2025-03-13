@@ -11,6 +11,12 @@ def remove_timezone(dt: datetime) -> datetime:
 
 
 # ------------------- User ---------------------#
+
+class UserRole(str, Enum):
+    admin = "admin"
+    vendor = "vendor"
+    user = "user"
+
 class UserBase(SQLModel):
     username: str
     email: str
@@ -20,10 +26,11 @@ class UserBase(SQLModel):
 
 class User(UserBase, table=True):
     user_id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+    role: UserRole = Field(default=UserRole.user)
     is_verified: bool = Field(default=False)
-    is_admin: bool = Field(default=False)
     is_active: bool= Field(default=True)
     password_hash: str = Field(exclude=True)
+
     created_at: datetime = Field(
         default_factory=lambda: remove_timezone(datetime.now(timezone.utc))
     )
@@ -31,6 +38,10 @@ class User(UserBase, table=True):
         default_factory=lambda: remove_timezone(datetime.now(timezone.utc))
     )
     deleted_at:Optional[datetime]= None
+
+    products: List["Product"] = Relationship(
+        back_populates="vendor", sa_relationship_kwargs={"cascade": "all, delete-orphan"}
+    )
 
     orders: List["Order"] = Relationship(
         back_populates="user"
@@ -62,6 +73,7 @@ class ProductBase(SQLModel):
 
 class Product(ProductBase, table=True):
     product_id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+    vendor_id: uuid.UUID = Field(foreign_key="user.user_id", nullable=False)
     created_at: datetime = Field(
         default_factory=lambda: remove_timezone(datetime.now(timezone.utc))
     )
@@ -72,6 +84,7 @@ class Product(ProductBase, table=True):
     categories: List["Category"] = Relationship(
         back_populates="products", link_model=ProductCategory
     )
+    vendor: Optional["User"] = Relationship(back_populates="products")
 
     order_items: List["OrderItem"] = Relationship(
         back_populates="product",

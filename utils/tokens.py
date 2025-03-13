@@ -41,7 +41,7 @@ def verify_token(token: str = Depends(oauth2_scheme)):
         username = payload.get("username")
         jti= payload.get("jti")
         expire= payload.get("exp")
-        is_admin= payload.get("is_admin")
+        role= payload.get("role")
 
 
         if not user_id or not username:
@@ -49,7 +49,7 @@ def verify_token(token: str = Depends(oauth2_scheme)):
                 status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token"
             )
 
-        return TokenData(user_id=user_id, username=username, jti=jti, expires_delta=expire, is_admin=is_admin)
+        return TokenData(user_id=user_id, username=username, jti=jti, expires_delta=expire, role=role)
     except (jwt.ExpiredSignatureError, jwt.InvalidTokenError, ValidationError):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid or Expired token"

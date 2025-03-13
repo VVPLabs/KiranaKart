@@ -1,8 +1,9 @@
 from pydantic import BaseModel, EmailStr, field_validator
-from typing import Optional, Annotated
+from typing import Optional, Annotated, List
 from pydantic.types import StringConstraints
 from datetime import datetime
 from sqlmodel import Field
+from db.models import UserRole
 import uuid, re
 
 UsernameType = Annotated[
@@ -40,7 +41,7 @@ class UserResponse(BaseModel):
     username: str
     email: EmailStr
     is_verified: bool
-    is_admin: bool
+    role: List[UserRole]
 
     class Config:
         from_attributes = True  # Enables ORM serialization
@@ -58,7 +59,7 @@ class TokenData(BaseModel):
     username: Optional[str] = None
     jti: Optional[str] = None
     expires_delta:Optional[datetime] = None
-    is_admin:Optional[bool]= None
+    role: List[UserRole]= []
 
 
 # Password reset schema

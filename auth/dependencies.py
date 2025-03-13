@@ -3,7 +3,8 @@ from fastapi import Depends, HTTPException, Request, status
 from fastapi.security import HTTPBearer
 from utils.tokens import verify_token
 from db.redis import token_in_blocklist
-from db.models import User
+from typing import List
+from db.models import User, UserRole
 from db.session import get_session
 from auth.services import AuthService
 
@@ -93,8 +94,8 @@ async def get_current_user(
 
 
 class RoleChecker:
-    def __init__(self, admin_required: bool = True) -> None:
-        self.admin_required = admin_required
+    def __init__(self, allowed_roles: List[UserRole]) -> None:
+        self.allowed_roles = allowed_roles
 
     def __call__(self, current_user: User = Depends(get_current_user)):
         if not current_user.is_verified:
@@ -105,8 +106,9 @@ class RoleChecker:
                     "resolution": "Please check your email for verification ",
                 },
             )
-        if self.admin_required and not current_user.is_admin:
+        if not any(role in self.allowed_roles for role in current_user.role):
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
                 detail="YOU ARE NOT PERMITTED TO PERFORM THIS ACTION",
             )
+        return current_user

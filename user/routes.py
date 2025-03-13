@@ -5,6 +5,7 @@ from auth.dependencies import RoleChecker, AccessTokenBearer
 from datetime import datetime, timezone
 from user.services import UserService
 from auth.services import AuthService
+from db.models import UserRole
 from sqlmodel.ext.asyncio.session import AsyncSession
 from db.session import get_session
 
@@ -12,7 +13,6 @@ from db.session import get_session
 User_router = APIRouter(prefix="/users", tags=["users"])
 user_service = UserService()
 auth_service = AuthService()
-role_checker = RoleChecker()
 access_token_bearer = AccessTokenBearer()
 
 
@@ -101,12 +101,12 @@ async def reactivate_user(
 @User_router.delete("/delete")
 async def delete_user(session :AsyncSession= Depends(get_session), token_details= Depends(access_token_bearer)):
     username = token_details["username"]
-    is_admin= token_details["is_admin"]
+    user_roles = token_details["role"]
     user = await auth_service.get_user_by_username(username, session)
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
-    if is_admin:
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Admins cannot delete their own account")
+    if any(role in [UserRole.admin, UserRole.vendor] for role in user_roles):
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Admins and Vendors cannot delete their own accounts")
     await user_service.delete_user(username, user.user_id, session)
     await session.commit()
 
@@ -118,7 +118,7 @@ async def get_user(
     user_id,
     session: AsyncSession = Depends(get_session),
     token_details=Depends(access_token_bearer),
-    _: bool = Depends(role_checker),
+    _: bool = Depends(RoleChecker([UserRole.admin])),
 ):
     return await user_service.get_user(user_id, session)
 
