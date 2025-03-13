@@ -3,16 +3,15 @@
 POST  http://127.0.0.1:8000/auth/login
 
 {
-  "username": "Alice.Wonder",
-  "password": "HelloWorld@123"
+  "username": "Mr.Robot77",
+  "password": "P@ssw0rd123!"
 }
 
 
 ###GET USER###
 
 GET http://127.0.0.1:8000/users/2ba3168c-9b29-402d-a35f-3f5a26e0cfcf
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRkZCIsInVzZXJfaWQiOiIyYmEzMTY4Yy05YjI5LTQwMmQtYTM1Zi0zZjVhMjZlMGNmY2YiLCJpc19hZG1pbiI6dHJ1ZSwiZXhwIjoxNzQxNzY5NzkxLCJyZWZyZXNoIjpmYWxzZSwianRpIjoiNGQyNjIzNGMtYzFkMi00ZjNlLTliZjItMzhjMWI0ZWIyMmQ3In0.830pJM4BOKS7DQpH7s0-kl60BHP8wfPgju7ZirrpGRI
-
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik1yLlJvYm90NzciLCJ1c2VyX2lkIjoiMzcyOGQwMWEtMGVkMS00ZGE3LWIxZmMtMDliNzU5ZjE0MjVkIiwicm9sZSI6WyJ2ZW5kb3IiXSwiZXhwIjoxNzQxODUwNjY4LCJyZWZyZXNoIjpmYWxzZSwianRpIjoiYTVjMzBiMDYtNWQxYi00MDEzLTkzNmEtNjQzNTI5OTRiNjk0In0.65jtm7IWDr6k6gCkblnqIq6V5tE3qepLlxYCdsQNwE4
 ###update user###
 PUT http://127.0.0.1:8000/users/2ba3168c-9b29-402d-a35f-3f5a26e0cfcf
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkFsaWNlLldvbmRlciIsInVzZXJfaWQiOiJhNTZhNzg1Ny1kMzVmLTRiMDctOGRmMS0zYzQxY2JlNTkxMDYiLCJpc19hZG1pbiI6ZmFsc2UsImV4cCI6MTc0MTc3NTYyOSwicmVmcmVzaCI6ZmFsc2UsImp0aSI6ImRlZDNhMjQ1LTFmYzEtNGE0MC05YWZiLTY2ZjllYzQ1MDQ4MCJ9.LKhD4VWHdkBv0_zfNE1PnEiPcQ4USA35V7v_mHbKYE0
@@ -26,9 +25,7 @@ Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkFsa
 
 ###GET CURRENT USER ###
 GET http://127.0.0.1:8000/users/self
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRkZCIsInVzZXJfaWQiOiIyYmEzMTY4Yy05YjI5LTQwMmQtYTM1Zi0zZjVhMjZlMGNmY2YiLCJpc19hZG1pbiI6dHJ1ZSwiZXhwIjoxNzQxNzY5NzkxLCJyZWZyZXNoIjpmYWxzZSwianRpIjoiNGQyNjIzNGMtYzFkMi00ZjNlLTliZjItMzhjMWI0ZWIyMmQ3In0.830pJM4BOKS7DQpH7s0-kl60BHP8wfPgju7ZirrpGRI
-
-
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik1yLlJvYm90NzciLCJ1c2VyX2lkIjoiMzcyOGQwMWEtMGVkMS00ZGE3LWIxZmMtMDliNzU5ZjE0MjVkIiwicm9sZSI6WyJ2ZW5kb3IiXSwiZXhwIjoxNzQxODUwNjY4LCJyZWZyZXNoIjpmYWxzZSwianRpIjoiYTVjMzBiMDYtNWQxYi00MDEzLTkzNmEtNjQzNTI5OTRiNjk0In0.65jtm7IWDr6k6gCkblnqIq6V5tE3qepLlxYCdsQNwE4
 ###VIEW ALL USERS###
 GET http://127.0.0.1:8000/users/all
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRkZCIsInVzZXJfaWQiOiIyYmEzMTY4Yy05YjI5LTQwMmQtYTM1Zi0zZjVhMjZlMGNmY2YiLCJpc19hZG1pbiI6dHJ1ZSwiZXhwIjoxNzQxNzY5NzkxLCJyZWZyZXNoIjpmYWxzZSwianRpIjoiNGQyNjIzNGMtYzFkMi00ZjNlLTliZjItMzhjMWI0ZWIyMmQ3In0.830pJM4BOKS7DQpH7s0-kl60BHP8wfPgju7ZirrpGRI
@@ -49,4 +46,34 @@ Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkFsa
 
 ###getnew access token ###
 GET  http://127.0.0.1:8000/auth/refresh_token
-Authorization: bearer
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik1yLlJvYm90NzciLCJ1c2VyX2lkIjoiMzcyOGQwMWEtMGVkMS00ZGE3LWIxZmMtMDliNzU5ZjE0MjVkIiwicm9sZSI6InZlbmRvciIsImV4cCI6MTc0MTg0ODM5MCwicmVmcmVzaCI6ZmFsc2UsImp0aSI6IjdjYzAxZTNmLWYzZDEtNGE1YS05YWNhLTQ4ZjE4NTkzMGY2MiJ9.HM4anElKfHg7sOOJP1xKBFgJekqc1ysKq6njLSQzWCY
+
+
+
+### create a new category ###
+POST  http://127.0.0.1:8000/categories
+
+{
+  "name": "Electronics"
+}
+
+### create product ###
+POST  http://127.0.0.1:8000/products
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik1yLlJvYm90NzciLCJ1c2VyX2lkIjoiMzcyOGQwMWEtMGVkMS00ZGE3LWIxZmMtMDliNzU5ZjE0MjVkIiwicm9sZSI6WyJ2ZW5kb3IiXSwiZXhwIjoxNzQxODU3MzY5LCJyZWZyZXNoIjpmYWxzZSwianRpIjoiZWMzM2JiMGUtZjMyNS00ZjJhLTk5ZGQtMzM5YzEzNzliZmY5In0.-dfJjLXwiUqAs0HCHUco6yRhxtNJOhwh9wCNx7ejRT4
+
+{
+  "name": "Noise-Canceling Wireless Earbuds",
+  "description": "Premium wireless earbuds with active noise cancellation and 24-hour battery life.",
+  "price": 79.99,
+  "stock": 200,
+  "category_names": [
+    "Electronics",
+    "Audio",
+    "Earbuds"
+  ]
+}
+
+
+### List all products ###
+GET  http://127.0.0.1:8000/products
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik1yLlJvYm90NzciLCJ1c2VyX2lkIjoiMzcyOGQwMWEtMGVkMS00ZGE3LWIxZmMtMDliNzU5ZjE0MjVkIiwicm9sZSI6WyJ2ZW5kb3IiXSwiZXhwIjoxNzQxODU3MzY5LCJyZWZyZXNoIjpmYWxzZSwianRpIjoiZWMzM2JiMGUtZjMyNS00ZjJhLTk5ZGQtMzM5YzEzNzliZmY5In0.-dfJjLXwiUqAs0HCHUco6yRhxtNJOhwh9wCNx7ejRT4

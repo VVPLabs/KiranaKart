@@ -49,12 +49,11 @@ class TokenBearer(HTTPBearer):
 
         token_data = verify_token(token).model_dump()
 
-
-        if await token_in_blocklist(token_data['jti']):
+        if await token_in_blocklist(token_data["jti"]):
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
                 detail={
-                    "error": "THIS TOKEN IS INVALID OR HAS BEEN REVOKED",
+                    "error": "THIS TOKEN IS INVALID OR HAS  BEEN REVOKED",
                     "resolution": "PLEASE GET A NEW TOKEN",
                 },
             )
@@ -106,7 +105,10 @@ class RoleChecker:
                     "resolution": "Please check your email for verification ",
                 },
             )
-        if not any(role in self.allowed_roles for role in current_user.role):
+        user_roles = current_user.role
+        if isinstance(user_roles, UserRole):
+            user_roles = [user_roles]
+        if not any(role in self.allowed_roles for role in user_roles):
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
                 detail="YOU ARE NOT PERMITTED TO PERFORM THIS ACTION",

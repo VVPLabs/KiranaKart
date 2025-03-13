@@ -26,10 +26,14 @@ def create_access_token(
     expires_delta: timedelta = timedelta(minutes=EXPIRY_MINUTES),
     refresh: Optional[bool] = False,
 ):
+    role = user_data.get("role", [])
+    if isinstance(role, str):  # Ensure role is always a list
+        role = [role]
+
     to_encode = user_data.copy()
     jti = str(uuid.uuid4())
     expire = datetime.now(timezone.utc) + expires_delta
-    to_encode.update({"exp": expire, "refresh": refresh, "jti": jti})
+    to_encode.update({"exp": expire, "refresh": refresh, "jti": jti, "role": role})
     encoded_jwt = jwt.encode(to_encode, JWT_SECRET, algorithm=JWT_ALGORITHM)
     return encoded_jwt
 

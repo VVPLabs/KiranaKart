@@ -5,7 +5,7 @@ from auth.dependencies import RoleChecker, AccessTokenBearer
 from datetime import datetime, timezone
 from user.services import UserService
 from auth.services import AuthService
-from db.models import UserRole
+from db.models import UserRole, User
 from sqlmodel.ext.asyncio.session import AsyncSession
 from db.session import get_session
 
@@ -64,7 +64,7 @@ async def deactivate_user(
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="USER NOT FOUND"
         )
-    await session.commit()
+
     return {"message": "Account deactivated successfully"}
 
 
@@ -95,7 +95,7 @@ async def reactivate_user(
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="USER NOT FOUND"
         )
-    await session.commit()
+
     return {"message": "Your account is now active"}
 
 @User_router.delete("/delete")
@@ -105,10 +105,10 @@ async def delete_user(session :AsyncSession= Depends(get_session), token_details
     user = await auth_service.get_user_by_username(username, session)
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
+    
     if any(role in [UserRole.admin, UserRole.vendor] for role in user_roles):
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Admins and Vendors cannot delete their own accounts")
     await user_service.delete_user(username, user.user_id, session)
-    await session.commit()
 
     return {"message": "User account deleted permanently"}
 
@@ -118,7 +118,7 @@ async def get_user(
     user_id,
     session: AsyncSession = Depends(get_session),
     token_details=Depends(access_token_bearer),
-    _: bool = Depends(RoleChecker([UserRole.admin])),
+    _: User = Depends(RoleChecker([UserRole.admin])),
 ):
     return await user_service.get_user(user_id, session)
 
@@ -137,5 +137,4 @@ async def update_user(
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="USER NOT FOUND"
         )
-    await session.commit()
     return updated_user

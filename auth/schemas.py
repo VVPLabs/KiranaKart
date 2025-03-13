@@ -1,4 +1,5 @@
-from pydantic import BaseModel, EmailStr, field_validator
+from pydantic import EmailStr, field_validator
+from sqlmodel import SQLModel
 from typing import Optional, Annotated, List
 from pydantic.types import StringConstraints
 from datetime import datetime
@@ -14,7 +15,7 @@ PASSWORD_REGEX = r"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
 
 
 # Schema for User Registration
-class UserRegister(BaseModel):
+class UserRegister(SQLModel):
     username: UsernameType
     email: EmailStr
     password: PasswordType
@@ -30,13 +31,13 @@ class UserRegister(BaseModel):
 
 
 # Schema for User Login
-class UserLogin(BaseModel):
+class UserLogin(SQLModel):
     username: UsernameType
     password: PasswordType
 
 
 # Response Schema for Authenticated User
-class UserResponse(BaseModel):
+class UserResponse(SQLModel):
     user_id: uuid.UUID
     username: str
     email: EmailStr
@@ -48,26 +49,26 @@ class UserResponse(BaseModel):
 
 
 # Token Schema
-class Token(BaseModel):
+class Token(SQLModel):
     access_token: str
     token_type: str = "bearer"
 
 
 # Token Data Schema (for extracting user info from JWT)
-class TokenData(BaseModel):
+class TokenData(SQLModel):
     user_id: Optional[uuid.UUID] = None
     username: Optional[str] = None
     jti: Optional[str] = None
-    expires_delta:Optional[datetime] = None
-    role: List[UserRole]= []
+    expires_delta: Optional[datetime] = None
+    role: List[UserRole] = []
 
 
 # Password reset schema
-class PasswordResetRequestModel(BaseModel):
+class PasswordResetRequestModel(SQLModel):
     email: EmailStr
 
 
-class PasswordResetConfirmModel(BaseModel):
+class PasswordResetConfirmModel(SQLModel):
     new_password: str = Field(..., min_length=8, max_length=100)
     confirm_password: str = Field(..., min_length=8, max_length=100)
 

@@ -12,23 +12,25 @@ def remove_timezone(dt: datetime) -> datetime:
 
 # ------------------- User ---------------------#
 
+
 class UserRole(str, Enum):
     admin = "admin"
     vendor = "vendor"
     user = "user"
 
+
 class UserBase(SQLModel):
     username: str
     email: str
-    first_name:Optional[str]= None
-    last_name:Optional[str]= None
+    first_name: Optional[str] = None
+    last_name: Optional[str] = None
 
 
 class User(UserBase, table=True):
     user_id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
     role: UserRole = Field(default=UserRole.user)
     is_verified: bool = Field(default=False)
-    is_active: bool= Field(default=True)
+    is_active: bool = Field(default=True)
     password_hash: str = Field(exclude=True)
 
     created_at: datetime = Field(
@@ -37,15 +39,14 @@ class User(UserBase, table=True):
     updated_at: datetime = Field(
         default_factory=lambda: remove_timezone(datetime.now(timezone.utc))
     )
-    deleted_at:Optional[datetime]= None
+    deleted_at: Optional[datetime] = None
 
     products: List["Product"] = Relationship(
-        back_populates="vendor", sa_relationship_kwargs={"cascade": "all, delete-orphan"}
+        back_populates="vendor",
+        sa_relationship_kwargs={"cascade": "all, delete-orphan"},
     )
 
-    orders: List["Order"] = Relationship(
-        back_populates="user"
-    )
+    orders: List["Order"] = Relationship(back_populates="user")
     reviews: List["Review"] = Relationship(
         back_populates="user", sa_relationship_kwargs={"cascade": "all, delete-orphan"}
     )
@@ -82,7 +83,9 @@ class Product(ProductBase, table=True):
     )
 
     categories: List["Category"] = Relationship(
-        back_populates="products", link_model=ProductCategory
+        back_populates="products",
+        link_model=ProductCategory,
+        sa_relationship_kwargs={"passive_deletes": True},
     )
     vendor: Optional["User"] = Relationship(back_populates="products")
 
@@ -115,7 +118,9 @@ class OrderBase(SQLModel):
 
 class Order(OrderBase, table=True):
     order_id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
-    user_id: Optional[uuid.UUID] = Field(foreign_key="user.user_id", index=True, nullable=True)
+    user_id: Optional[uuid.UUID] = Field(
+        foreign_key="user.user_id", index=True, nullable=True
+    )
     created_at: datetime = Field(
         default_factory=lambda: remove_timezone(datetime.now(timezone.utc))
     )
@@ -229,12 +234,16 @@ class Payment(PaymentBase, table=True):
 
 
 # ------------------ Categories------------------------#
-class Category(SQLModel, table=True):
-    category_id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
-    name: str
+class CategoryBase(SQLModel):
+    category_name: str
     parent_category_id: Optional[uuid.UUID] = Field(
         foreign_key="category.category_id", default=None, nullable=True
     )
+
+
+class Category(CategoryBase, table=True):
+    category_id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+
     created_at: datetime = Field(
         default_factory=lambda: remove_timezone(datetime.now(timezone.utc))
     )

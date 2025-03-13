@@ -1,6 +1,8 @@
-import os
-from dotenv import load_dotenv
-
-load_dotenv()  # Ensure .env is loaded
-
-print("REDIS URL from env:", os.getenv("REDIS_URL"))
+import jwt
+from config import settings
+from utils.tokens import verify_token
+token= "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik1yLlJvYm90NzciLCJ1c2VyX2lkIjoiMzcyOGQwMWEtMGVkMS00ZGE3LWIxZmMtMDliNzU5ZjE0MjVkIiwicm9sZSI6WyJ2ZW5kb3IiXSwiZXhwIjoxNzQxODUwNTAyLCJyZWZyZXNoIjpmYWxzZSwianRpIjoiMTVkNGZmZmMtZmQxMS00OTA4LTk2YWYtYjExYzllZjVhN2I2In0.Rj7zV9UeHXChn4YQ0WHTwKSQvPd2Rwz484PCC8t1QoQ"
+data= verify_token(token)
+print( data)
+decoded = jwt.decode("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik1yLlJvYm90NzciLCJ1c2VyX2lkIjoiMzcyOGQwMWEtMGVkMS00ZGE3LWIxZmMtMDliNzU5ZjE0MjVkIiwicm9sZSI6InZlbmRvciIsImV4cCI6MTc0MTg0ODQ4NCwicmVmcmVzaCI6ZmFsc2UsImp0aSI6IjgwMmQ4MmZkLWYwNjEtNGI3Zi05YTIzLTY2NGNmZjI2MGMwYiJ9.n5eh4PjdXGHHWJo-mKizTB94TIKWoRYArF9M5pMxHyE", settings.JWT_SECRET, algorithms=[settings.JWT_ALGORITHM])
+print(decoded)

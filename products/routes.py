@@ -1,6 +1,8 @@
 from fastapi import APIRouter, Depends
 from sqlmodel.ext.asyncio.session import AsyncSession
 from db.session import get_session
+from db.models import UserRole, Product, User
+from auth.dependencies import RoleChecker
 from typing import List
 from products.schemes import ProductResponse, ProductCreate
 from products.services import ProductService
@@ -14,9 +16,11 @@ async def all_products(session:AsyncSession=Depends(get_session)):
     return products_data
 
 
-@Product_router.post("/")
-async def add_product(products_data:ProductCreate):
-    pass
+@Product_router.post("/", response_model=ProductResponse)
+async def add_product(product_data:ProductCreate, session:AsyncSession=Depends(get_session), vendor:User = Depends(RoleChecker([UserRole.vendor])) ):
+    product_data.vendor_id = vendor.user_id
+    new_product = await product_services.create_new_product(session, product_data)
+    return new_product
 
 
 
