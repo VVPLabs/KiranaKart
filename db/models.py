@@ -1,6 +1,8 @@
 import uuid
 from sqlmodel import SQLModel, Field, Relationship
 from typing import Optional, List
+from sqlalchemy import Column
+from sqlalchemy.dialects.postgresql import TSVECTOR
 from datetime import datetime, timezone
 from enum import Enum
 
@@ -81,6 +83,8 @@ class Product(ProductBase, table=True):
     updated_at: datetime = Field(
         default_factory=lambda: remove_timezone(datetime.now(timezone.utc))
     )
+
+    name_tsv: str = Field(sa_column=Column(TSVECTOR, index=True))
 
     categories: List["Category"] = Relationship(
         back_populates="products",
@@ -250,6 +254,7 @@ class Category(CategoryBase, table=True):
     updated_at: datetime = Field(
         default_factory=lambda: remove_timezone(datetime.now(timezone.utc))
     )
+    name_tsv: str = Field(sa_column=Column(TSVECTOR, index=True))
 
     products: List["Product"] = Relationship(
         back_populates="categories", link_model=ProductCategory

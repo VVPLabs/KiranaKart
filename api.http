@@ -13,7 +13,7 @@ POST  http://127.0.0.1:8000/auth/login
 GET http://127.0.0.1:8000/users/2ba3168c-9b29-402d-a35f-3f5a26e0cfcf
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik1yLlJvYm90NzciLCJ1c2VyX2lkIjoiMzcyOGQwMWEtMGVkMS00ZGE3LWIxZmMtMDliNzU5ZjE0MjVkIiwicm9sZSI6WyJ2ZW5kb3IiXSwiZXhwIjoxNzQxODUwNjY4LCJyZWZyZXNoIjpmYWxzZSwianRpIjoiYTVjMzBiMDYtNWQxYi00MDEzLTkzNmEtNjQzNTI5OTRiNjk0In0.65jtm7IWDr6k6gCkblnqIq6V5tE3qepLlxYCdsQNwE4
 ###update user###
-PUT http://127.0.0.1:8000/users/2ba3168c-9b29-402d-a35f-3f5a26e0cfcf
+PUT http://127.0.0.1:8000/users/Noise-Canceling Wireless Earbuds
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkFsaWNlLldvbmRlciIsInVzZXJfaWQiOiJhNTZhNzg1Ny1kMzVmLTRiMDctOGRmMS0zYzQxY2JlNTkxMDYiLCJpc19hZG1pbiI6ZmFsc2UsImV4cCI6MTc0MTc3NTYyOSwicmVmcmVzaCI6ZmFsc2UsImp0aSI6ImRlZDNhMjQ1LTFmYzEtNGE0MC05YWZiLTY2ZjllYzQ1MDQ4MCJ9.LKhD4VWHdkBv0_zfNE1PnEiPcQ4USA35V7v_mHbKYE0
 
 {
@@ -59,21 +59,128 @@ POST  http://127.0.0.1:8000/categories
 
 ### create product ###
 POST  http://127.0.0.1:8000/products
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik1yLlJvYm90NzciLCJ1c2VyX2lkIjoiMzcyOGQwMWEtMGVkMS00ZGE3LWIxZmMtMDliNzU5ZjE0MjVkIiwicm9sZSI6WyJ2ZW5kb3IiXSwiZXhwIjoxNzQxODU3MzY5LCJyZWZyZXNoIjpmYWxzZSwianRpIjoiZWMzM2JiMGUtZjMyNS00ZjJhLTk5ZGQtMzM5YzEzNzliZmY5In0.-dfJjLXwiUqAs0HCHUco6yRhxtNJOhwh9wCNx7ejRT4
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik1yLlJvYm90NzciLCJ1c2VyX2lkIjoiMzcyOGQwMWEtMGVkMS00ZGE3LWIxZmMtMDliNzU5ZjE0MjVkIiwicm9sZSI6WyJ2ZW5kb3IiXSwiZXhwIjoxNzQxOTQ2MzYyLCJyZWZyZXNoIjpmYWxzZSwianRpIjoiOTEwNDdkZjEtMmQxNS00MzQyLWIxNDUtNmZmYmE4YTlmYTEzIn0.8Li0T6MwMYwfJAtb_RTQL-vzgU2wlOWbqF3bDDn7ad4
 
-{
-  "name": "Noise-Canceling Wireless Earbuds",
-  "description": "Premium wireless earbuds with active noise cancellation and 24-hour battery life.",
-  "price": 79.99,
-  "stock": 200,
-  "category_names": [
-    "Electronics",
-    "Audio",
-    "Earbuds"
-  ]
-}
+
+###add bulk product ###
+POST  http://127.0.0.1:8000/products/bulk
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik1yLlJvYm90NzciLCJ1c2VyX2lkIjoiMzcyOGQwMWEtMGVkMS00ZGE3LWIxZmMtMDliNzU5ZjE0MjVkIiwicm9sZSI6WyJ2ZW5kb3IiXSwiZXhwIjoxNzQxOTQ2MzYyLCJyZWZyZXNoIjpmYWxzZSwianRpIjoiOTEwNDdkZjEtMmQxNS00MzQyLWIxNDUtNmZmYmE4YTlmYTEzIn0.8Li0T6MwMYwfJAtb_RTQL-vzgU2wlOWbqF3bDDn7ad4
+
+[
+  {
+    "name": "Hemp Fiber Hoodie",
+    "description": "Comfortable and breathable hoodie made from organic hemp fibers",
+    "price": 34.99,
+    "stock": 120,
+    "color": "Green",
+    "size": "L",
+    "category_names": ["Clothing", "Sustainable Fashion", "Casual Wear"],
+    "vendor_id": null
+  },
+  {
+    "name": "Compostable Phone Case",
+    "description": "Eco-friendly phone case made from biodegradable materials",
+    "price": 19.99,
+    "stock": 80,
+    "color": "Black",
+    "size": "Universal",
+    "category_names": ["Accessories", "Eco-Friendly", "Electronics"],
+    "vendor_id": null
+  },
+  {
+    "name": "Coconut Shell Bowl Set",
+    "description": "Set of 2 hand-crafted coconut shell bowls with wooden spoons",
+    "price": 14.99,
+    "stock": 150,
+    "color": "Natural",
+    "size": "Medium",
+    "category_names": ["Kitchen", "Sustainable Living", "Home Goods"],
+    "vendor_id": null
+  },
+  {
+    "name": "Reusable Mesh Produce Bags",
+    "description": "Set of 5 breathable cotton mesh bags for grocery shopping",
+    "price": 10.99,
+    "stock": 200,
+    "color": "White",
+    "size": "Assorted",
+    "category_names": ["Grocery", "Eco-Friendly", "Reusable"],
+    "vendor_id": null
+  },
+  {
+    "name": "Beeswax Food Wraps",
+    "description": "Set of 3 reusable beeswax wraps for food storage",
+    "price": 12.99,
+    "stock": 180,
+    "color": "Multi-color",
+    "size": "Assorted",
+    "category_names": ["Kitchen", "Zero Waste", "Food Storage"],
+    "vendor_id": null
+  },
+  {
+    "name": "Solar LED Garden Lights",
+    "description": "Pack of 6 solar-powered LED garden pathway lights",
+    "price": 39.99,
+    "stock": 60,
+    "color": "Black",
+    "size": "Standard",
+    "category_names": ["Garden", "Solar Energy", "Outdoor"],
+    "vendor_id": null
+  },
+  {
+    "name": "Bamboo Hair Brush",
+    "description": "Eco-friendly hair brush with bamboo bristles for a smooth finish",
+    "price": 9.99,
+    "stock": 220,
+    "color": "Natural",
+    "size": "Standard",
+    "category_names": ["Personal Care", "Sustainable Living", "Hair Accessories"],
+    "vendor_id": null
+  },
+  {
+    "name": "Charcoal Air Purifying Bags",
+    "description": "Set of 2 activated charcoal bags to absorb odors naturally",
+    "price": 15.99,
+    "stock": 90,
+    "color": "Gray",
+    "size": "Medium",
+    "category_names": ["Home Goods", "Eco-Friendly", "Air Purification"],
+    "vendor_id": null
+  },
+  {
+    "name": "Upcycled Denim Laptop Sleeve",
+    "description": "Stylish and durable laptop sleeve made from upcycled denim fabric",
+    "price": 25.99,
+    "stock": 110,
+    "color": "Blue",
+    "size": "13-inch",
+    "category_names": ["Accessories", "Sustainable Fashion", "Electronics"],
+    "vendor_id": null
+  },
+  {
+    "name": "Recycled Plastic Yoga Mat",
+    "description": "Non-slip yoga mat made from recycled plastic bottles",
+    "price": 29.99,
+    "stock": 130,
+    "color": "Purple",
+    "size": "Standard",
+    "category_names": ["Fitness", "Eco-Friendly", "Yoga Accessories"],
+    "vendor_id": null
+  }
+]
+
+
+
+
 
 
 ### List all products ###
 GET  http://127.0.0.1:8000/products
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik1yLlJvYm90NzciLCJ1c2VyX2lkIjoiMzcyOGQwMWEtMGVkMS00ZGE3LWIxZmMtMDliNzU5ZjE0MjVkIiwicm9sZSI6WyJ2ZW5kb3IiXSwiZXhwIjoxNzQxODU3MzY5LCJyZWZyZXNoIjpmYWxzZSwianRpIjoiZWMzM2JiMGUtZjMyNS00ZjJhLTk5ZGQtMzM5YzEzNzliZmY5In0.-dfJjLXwiUqAs0HCHUco6yRhxtNJOhwh9wCNx7ejRT4
+
+
+### show product ###
+GET  http://127.0.0.1:8000/products/search/abf840ef-3a1e-4b25-87a1-88f75c11ab40
+
+
+### Update product ###

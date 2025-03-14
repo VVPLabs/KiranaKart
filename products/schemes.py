@@ -16,7 +16,7 @@ class ProductUpdate(SQLModel):
     description: Optional[str] = None
     price: Optional[float] = Field(default=None, ge=0)
     stock: Optional[int] = Field(default=None, ge=0)
-    category_ids: Optional[List[UUID]] = None
+    category_names: Optional[List[str]] = None
 
 
 class ProductCategoryLink(SQLModel):
