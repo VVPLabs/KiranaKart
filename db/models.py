@@ -1,8 +1,8 @@
 import uuid
-from sqlmodel import SQLModel, Field, Relationship
+from sqlmodel import SQLModel, Field, Relationship, JSON
 from typing import Optional, List
-from sqlalchemy import Column
-from sqlalchemy.dialects.postgresql import TSVECTOR
+from sqlalchemy import Column, ForeignKey
+from sqlalchemy.dialects.postgresql import TSVECTOR, UUID
 from datetime import datetime, timezone
 from enum import Enum
 
@@ -34,6 +34,7 @@ class User(UserBase, table=True):
     is_verified: bool = Field(default=False)
     is_active: bool = Field(default=True)
     password_hash: str = Field(exclude=True)
+    image_url: Optional[str] = None
 
     created_at: datetime = Field(
         default_factory=lambda: remove_timezone(datetime.now(timezone.utc))
@@ -59,8 +60,20 @@ class User(UserBase, table=True):
 
 # ------------------ Product-Category Association Table ---------------------#
 class ProductCategory(SQLModel, table=True):
-    product_id: uuid.UUID = Field(foreign_key="product.product_id", primary_key=True)
-    category_id: uuid.UUID = Field(foreign_key="category.category_id", primary_key=True)
+    product_id: uuid.UUID = Field(
+        sa_column=Column(
+            UUID(as_uuid=True),
+            ForeignKey("product.product_id", ondelete="CASCADE"),
+            primary_key=True,
+        )
+    )
+    category_id: uuid.UUID = Field(
+        sa_column=Column(
+            UUID(as_uuid=True),
+            ForeignKey("category.category_id", ondelete="CASCADE"),
+            primary_key=True,
+        )
+    )
     created_at: datetime = Field(
         default_factory=lambda: remove_timezone(datetime.now(timezone.utc))
     )
@@ -83,13 +96,14 @@ class Product(ProductBase, table=True):
     updated_at: datetime = Field(
         default_factory=lambda: remove_timezone(datetime.now(timezone.utc))
     )
-
+    image_urls: Optional[List[str]] = Field(default=[], sa_column=Column(JSON))
     name_tsv: str = Field(sa_column=Column(TSVECTOR, index=True))
 
     categories: List["Category"] = Relationship(
         back_populates="products",
         link_model=ProductCategory,
         sa_relationship_kwargs={"passive_deletes": True},
+
     )
     vendor: Optional["User"] = Relationship(back_populates="products")
 
@@ -247,6 +261,7 @@ class CategoryBase(SQLModel):
 
 class Category(CategoryBase, table=True):
     category_id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+    image_url: Optional[str] = None
 
     created_at: datetime = Field(
         default_factory=lambda: remove_timezone(datetime.now(timezone.utc))

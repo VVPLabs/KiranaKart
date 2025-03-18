@@ -1,8 +1,33 @@
-import jwt
-from config import settings
-from utils.tokens import verify_token
-token= "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik1yLlJvYm90NzciLCJ1c2VyX2lkIjoiMzcyOGQwMWEtMGVkMS00ZGE3LWIxZmMtMDliNzU5ZjE0MjVkIiwicm9sZSI6WyJ2ZW5kb3IiXSwiZXhwIjoxNzQxODUwNTAyLCJyZWZyZXNoIjpmYWxzZSwianRpIjoiMTVkNGZmZmMtZmQxMS00OTA4LTk2YWYtYjExYzllZjVhN2I2In0.Rj7zV9UeHXChn4YQ0WHTwKSQvPd2Rwz484PCC8t1QoQ"
-data= verify_token(token)
-print( data)
-decoded = jwt.decode("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik1yLlJvYm90NzciLCJ1c2VyX2lkIjoiMzcyOGQwMWEtMGVkMS00ZGE3LWIxZmMtMDliNzU5ZjE0MjVkIiwicm9sZSI6InZlbmRvciIsImV4cCI6MTc0MTg0ODQ4NCwicmVmcmVzaCI6ZmFsc2UsImp0aSI6IjgwMmQ4MmZkLWYwNjEtNGI3Zi05YTIzLTY2NGNmZjI2MGMwYiJ9.n5eh4PjdXGHHWJo-mKizTB94TIKWoRYArF9M5pMxHyE", settings.JWT_SECRET, algorithms=[settings.JWT_ALGORITHM])
-print(decoded)
+import requests
+import schemathesis
+
+# Define API Schema
+schema = schemathesis.from_uri("http://127.0.0.1:8000/openapi.json")
+
+def get_auth_token():
+    url = "http://127.0.0.1:8000/auth/login"
+    credentials = {"username": "JohnDoe_99", "password": "StrongPass@1"}
+    response = requests.post(url, json=credentials)
+    token = response.json().get("access_token", "")
+
+    if not token:
+        print("❌ Failed to get token:", response.json())
+    else:
+        print("✅ Auth token received:", token)
+
+    return token
+
+@schema.parametrize()  # This generates multiple test cases
+def test_api(case):
+    token = get_auth_token()
+    if not token:
+        print("❌ Skipping test: No auth token")
+        return
+
+    case.headers = {"Authorization": f"Bearer {token}"}
+    response = case.call()
+
+    print(f"✅ Running test for: {case.method} {case.path}")
+    print(f"Response: {response.status_code} {response.text}")
+
+    case.validate_response(response)

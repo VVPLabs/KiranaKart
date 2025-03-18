@@ -17,6 +17,8 @@ class ProductUpdate(SQLModel):
     price: Optional[float] = Field(default=None, ge=0)
     stock: Optional[int] = Field(default=None, ge=0)
     category_names: Optional[List[str]] = None
+    image_urls: Optional[List[str]] = None
+
 
 
 class ProductCategoryLink(SQLModel):
@@ -28,6 +30,7 @@ class ProductResponse(ProductBase):
     product_id: UUID
     created_at: datetime
     categories: List[ProductCategoryLink]
+    image_urls: Optional[List[str]]= []
 
 
 class ProductListResponse(SQLModel):

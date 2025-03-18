@@ -3,8 +3,8 @@
 POST  http://127.0.0.1:8000/auth/login
 
 {
-  "username": "Mr.Robot77",
-  "password": "P@ssw0rd123!"
+  "username": "JohnDoe_99",
+  "password": "StrongPass@1"
 }
 
 
@@ -175,12 +175,41 @@ Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik1yL
 
 
 ### List all products ###
-GET  http://127.0.0.1:8000/products
+GET  http://127.0.0.1:8000/products?limit=10
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik1yLlJvYm90NzciLCJ1c2VyX2lkIjoiMzcyOGQwMWEtMGVkMS00ZGE3LWIxZmMtMDliNzU5ZjE0MjVkIiwicm9sZSI6WyJ2ZW5kb3IiXSwiZXhwIjoxNzQxODU3MzY5LCJyZWZyZXNoIjpmYWxzZSwianRpIjoiZWMzM2JiMGUtZjMyNS00ZjJhLTk5ZGQtMzM5YzEzNzliZmY5In0.-dfJjLXwiUqAs0HCHUco6yRhxtNJOhwh9wCNx7ejRT4
 
 
 ### show product ###
-GET  http://127.0.0.1:8000/products/search/abf840ef-3a1e-4b25-87a1-88f75c11ab40
+GET  http://127.0.0.1:8000/products/search/notebook
 
 
 ### Update product ###
+PATCH http://127.0.0.1:8000/products/68bd616a-8fe1-4096-ace4-8b11e825de10 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkpvaG5Eb2VfOTkiLCJ1c2VyX2lkIjoiOTA1OTUzN2UtYjRjNy00MTg5LTg1NDQtN2VmODhhNzNiN2U2Iiwicm9sZSI6WyJhZG1pbiJdLCJleHAiOjE3NDIyMTA0MzIsInJlZnJlc2giOmZhbHNlLCJqdGkiOiIzNTg5OGU2ZS00OThjLTQwZTgtODM2MS1jMzI0OGZiNDk5NjkifQ.XzfxiINpWkUfGKqDdNR2zh4ZlTIUUZBNtbfuSahm9lU
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="product_update_data"
+
+{"price": 4.99, "stock": 25}
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+
+
+###delete product ###
+DELETE http://127.0.0.1:8000/products/059b0a7d-985e-4d15-a251-c42974daab90
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkpvaG5Eb2VfOTkiLCJ1c2VyX2lkIjoiOTA1OTUzN2UtYjRjNy00MTg5LTg1NDQtN2VmODhhNzNiN2U2Iiwicm9sZSI6WyJhZG1pbiJdLCJleHAiOjE3NDIyMDY5MTQsInJlZnJlc2giOmZhbHNlLCJqdGkiOiJjYzc0ZDJiOC05ODNiLTQwN2UtODQxYS02ZDQzMWFiZDNlYmQifQ.QDPq5K2KqWsvQkPGbhE0FeTAPaKuzu3lw9Tx898z4Is
+
+
+###upload images ###
+
+POST http://127.0.0.1:8000/products/059b0a7d-985e-4d15-a251-c42974daab90/upload-images
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkpvaG5Eb2VfOTkiLCJ1c2VyX2lkIjoiOTA1OTUzN2UtYjRjNy00MTg5LTg1NDQtN2VmODhhNzNiN2U2Iiwicm9sZSI6WyJhZG1pbiJdLCJleHAiOjE3NDIyMDMzMjgsInJlZnJlc2giOmZhbHNlLCJqdGkiOiIxMDU5NzBlNy05ZDQxLTQ0NTYtOGFmZC1kNzEwNTE5YjNmOTMifQ._PQNKnOOrToBXmkS4EzQLJWO_Mqjx67yQr8u9C2kpaY
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="files"; filename="reusable_cup.png"
+Content-Type: image/png
+
+< C:\Users\intel\Downloads\reusable_cup.png
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
